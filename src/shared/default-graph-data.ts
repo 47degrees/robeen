@@ -1,18 +1,19 @@
 import { GraphData } from '@app/types/types';
 import { hasDataIsNotempty } from '@app/utils/utils'
 
+
 export const DEFAULT_GRAPH_DATA_BAR: GraphData = {
   barChart: {
     axis: {
       x: {
         visible: true,
         gridVisible: true,
-        format: 'ANY'
+        format: 'GROUPED_TWO_DIGITS'
       },
       y: {
         visible: true,
         gridVisible: true,
-        format: 'ANY'
+        format: 'TWO_DECIMALS'
       },
     },
     margin: {

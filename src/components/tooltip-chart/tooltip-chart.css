@@ -1,0 +1,36 @@
+tooltip-chart .tooltip  {
+  position: absolute;
+  padding: 8px;
+  opacity: 0;
+  background-color: rgba(66, 66, 66, 0.9);
+  font: 0.85rem sans-serif;
+  color: #fff;
+  border: 8px solid rgba(66, 66, 66, 0.95);
+  border-radius: 2px;
+  pointer-events: none;
+  width: 50%;
+  max-width: 600px;
+  min-width: 300px;
+}
+
+tooltip-chart .tooltip-title  {
+  font-size: 1rem;
+  padding: 8px 0;
+}
+
+tooltip-chart .tooltip-data-row {
+  display: flex;
+  justify-content: space-around;
+  padding: 8px 0;
+}
+
+tooltip-chart .tooltip-data-title  {
+  font-weight: bold;
+  padding-bottom: 8px;
+}
+
+tooltip-chart .error-info {
+  color: tomato;
+}
+
+

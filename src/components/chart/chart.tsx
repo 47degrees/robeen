@@ -28,14 +28,22 @@ export class Chart {
   tooltipEl: HTMLRobeenTooltipElement;
 
   async componentWillLoad() {
-    const response = await fetch(this.dataUrl);
-    const data = await response.json();
-    this.hoodData = data;
-
     this.graphData = { ...DEFAULT_GRAPH_DATA_BAR };
 
-    this.graphData.labels = this.hoodData.map((metric) => metric.benchmark);
-    this.graphData.data = this.hoodData.map((metric) => metric.primaryMetric.score);
+    try {
+      if (this.dataUrl) {
+        const response = await fetch(this.dataUrl);
+        const data = await response.json();
+        this.hoodData = data;
+
+        this.graphData.labels = this.hoodData.map((metric) => metric.benchmark);
+        this.graphData.data = this.hoodData.map((metric) => metric.primaryMetric.score);
+      } else {
+        console.warn('No URL to fetch the JMH JSON data from has been set.')
+      }
+    } catch(e) {
+      console.warn('Impossible to fetch a valid JMH JSON data, please check the URL.')
+    }
   }
 
   componentDidLoad() {
@@ -46,13 +54,26 @@ export class Chart {
       this.graphData.barChart.margin.top -
       this.graphData.barChart.margin.bottom;
 
-    this.initSlots();
-    this.drawChart();
-    const onResize = () => {
+    try {
+      this.initSlots();
       this.drawChart();
-    };
 
-    window.addEventListener('resize', onResize);
+      const onResize = () => {
+        this.drawChart();
+      };
+
+      window.addEventListener('resize', onResize);
+    } catch(e) {
+      console.warn(e);
+      this.drawError(e);
+    }
+  }
+
+  drawError(message: string): void {
+    this.setRoot();
+    this.d3sRoot
+      .append("text")
+      .text(message);   
   }
 
   drawChart(): void {

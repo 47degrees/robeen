@@ -4,7 +4,7 @@ import { format } from 'd3-format';
 
 
 const THROW_ERROR = (): Error => {
-  throw new Error(`The data injected isn't valid.`);
+  throw `The data to draw the graphic isn't valid.`;
 };
 
 export const hasDataIsNotempty: HasData<GraphData> = ({

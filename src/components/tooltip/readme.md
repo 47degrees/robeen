@@ -1,15 +1,8 @@
-# tooltip-chart
+# robeen-tooltip
 
 
 
 <!-- Auto Generated Below -->
-
-
-## Properties
-
-| Property | Attribute | Description | Type     | Default    |
-| -------- | --------- | ----------- | -------- | ---------- |
-| `align`  | `align`   |             | `string` | `'center'` |
 
 
 ## Methods

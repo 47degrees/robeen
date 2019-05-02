@@ -1,88 +1,91 @@
-import { Component, Element, Prop, Method } from '@stencil/core';
-import objectAssignDeep from 'object-assign-deep';
+import { Component, Element, Prop } from '@stencil/core';
 
 import { Selection, select, event } from 'd3-selection';
 import { max } from 'd3-array';
 import { ScaleBand, scaleBand, ScaleLinear, scaleLinear } from 'd3-scale';
 import { axisBottom, axisLeft } from 'd3-axis';
-import {
-  initTooltipIfExists,
-  formatter,
-  circularFind,
-} from '@app/utils/utils';
+
+import { formatter, circularFind } from '@app/utils/utils';
 import { DEFAULT_GRAPH_DATA_BAR } from '@app/shared/default-graph-data';
 
-import {  GraphData, JMHData } from '@app/types/types';
+import { GraphData, JMHData } from '@app/types/types';
 
 
 @Component({
-  tag: 'horizontal-bar-chart',
+  tag: 'fortyseven-robeen',
 })
-export class HorizontalBarChart {
-  @Prop() graphData: GraphData<number[]>;
+export class Chart {
   @Prop() dataUrl: string;
-  @Element() horizontalBarChartEl: HTMLElement;
-  graphDataMerged: GraphData<number[]>;
+  @Element() chartEl: HTMLElement;
+  graphData: GraphData<number[]>;
   hoodData: JMHData;
-  svg: Selection<SVGElement, any, HTMLElement, any>;
-  root: Selection<SVGElement, any, HTMLElement, any>;
+  d3sSvg: Selection<SVGElement, any, HTMLElement, any>;
+  d3sRoot: Selection<SVGElement, any, HTMLElement, any>;
   width: number;
   height: number;
   x: ScaleLinear<number, number>;
   y: ScaleBand<string>;
-  tooltipEl: HTMLTooltipChartElement;
+  tooltipEl: HTMLRobeenTooltipElement;
 
   async componentWillLoad() {
-    const response = await fetch(this.dataUrl);
-    const data = await response.json();
-    this.hoodData = data;
+    this.graphData = { ...DEFAULT_GRAPH_DATA_BAR };
 
-    this.graphDataMerged = objectAssignDeep(
-      { ...DEFAULT_GRAPH_DATA_BAR },
-      this.graphData,
-    );
+    try {
+      if (this.dataUrl) {
+        const response = await fetch(this.dataUrl);
+        const data = await response.json();
+        this.hoodData = data;
 
-    this.graphDataMerged.labels = this.hoodData.map((metric) => metric.benchmark);
-    this.graphDataMerged.data = this.hoodData.map((metric) => metric.primaryMetric.score);
+        this.graphData.labels = this.hoodData.map((metric) => metric.benchmark);
+        this.graphData.data = this.hoodData.map((metric) => metric.primaryMetric.score);
+      } else {
+        console.warn('No URL to fetch the JMH JSON data from has been set.')
+      }
+    } catch(e) {
+      console.warn('Impossible to fetch a valid JMH JSON data, please check the URL.')
+    }
   }
 
   componentDidLoad() {
-    this.svg = select(this.horizontalBarChartEl.getElementsByTagName('svg')[0]);
+    this.d3sSvg = select(this.chartEl.getElementsByTagName('svg')[0]);
 
     this.height =
-      this.svg.node().getBoundingClientRect().height -
-      this.graphDataMerged.barChart.margin.top -
-      this.graphDataMerged.barChart.margin.bottom;
+      this.d3sSvg.node().getBoundingClientRect().height -
+      this.graphData.barChart.margin.top -
+      this.graphData.barChart.margin.bottom;
 
-    this.initSlots();
-    this.drawChart();
-    const onResize = () => {
+    try {
+      this.initSlots();
       this.drawChart();
-    };
 
-    window.addEventListener('resize', onResize);
+      const onResize = () => {
+        this.drawChart();
+      };
+
+      window.addEventListener('resize', onResize);
+    } catch(e) {
+      console.warn(e);
+      this.drawError(e);
+    }
   }
 
-  @Method()
-  updateGraphData(graphData: GraphData<number[]>): void {
-    this.graphDataMerged = objectAssignDeep(
-      { ...DEFAULT_GRAPH_DATA_BAR },
-      graphData,
-    );
-
-    this.drawChart();
+  drawError(message: string): void {
+    this.setRoot();
+    this.d3sRoot
+      .append("text")
+      .text(message);   
   }
 
   drawChart(): void {
     if (this.hasData()) {
-      this.reSetRoot();
+      this.setRoot();
 
       this.width =
-        this.svg.node().getBoundingClientRect().width -
-        this.graphDataMerged.barChart.margin.left -
-        this.graphDataMerged.barChart.margin.right;
+        this.d3sSvg.node().getBoundingClientRect().width -
+        this.graphData.barChart.margin.left -
+        this.graphData.barChart.margin.right;
 
-      const originalGraphData: number[] = this.graphDataMerged.data;
+      const originalGraphData: number[] = this.graphData.data;
       const originalGraphDataSortedIndexes: any[] = originalGraphData
         .map((val, ind) => ({ ind, val }))
         .sort((a, b) => a.val >= b.val ? 1 : 0)
@@ -100,7 +103,7 @@ export class HorizontalBarChart {
         .domain(
           originalGraphDataSortedIndexes
             .map(
-            (sortedIndex, originaIndex): string => `${this.graphDataMerged.labels[sortData ? sortedIndex : originaIndex].split('.').slice(-1)[0]}`,
+            (sortedIndex, originaIndex): string => `${this.graphData.labels[sortData ? sortedIndex : originaIndex].split('.').slice(-1)[0]}`,
           ),
         )
         .range([0, this.height])
@@ -113,46 +116,52 @@ export class HorizontalBarChart {
   }
 
   hasData(): Error | boolean {
-    return this.graphDataMerged.hasData(this.graphDataMerged);
+    return this.graphData.hasData(this.graphData);
   }
 
-  reSetRoot(): void {
-    if (this.root) {
-      this.root.remove();
+  setRoot(): void {
+    if (this.d3sRoot) {
+      this.d3sRoot.remove();
     }
 
-    this.root = this.svg
+    this.d3sRoot = this.d3sSvg
       .append('g')
       .attr(
         'transform',
-        `translate(${this.graphDataMerged.barChart.margin.left}, ${
-        this.graphDataMerged.barChart.margin.top
+        `translate(${this.graphData.barChart.margin.left}, ${
+        this.graphData.barChart.margin.top
         })`,
       );
   }
 
   initSlots() {
-    this.tooltipEl = initTooltipIfExists(this.horizontalBarChartEl);
+    const element: Element = this.chartEl.getElementsByClassName('tooltip')[0];
+
+    if (element) {
+      const component = this.chartEl.querySelector('robeen-tooltip');
+      component.tooltip(element);
+      this.tooltipEl = component;
+    }
   }
 
   drawAxis(): void {
-    if (this.graphDataMerged.barChart.axis.x.visible) {
-      this.root
+    if (this.graphData.barChart.axis.x.visible) {
+      this.d3sRoot
         .append('g')
         .attr('class', 'x axis')
         .attr('transform', `translate(0, ${this.height})`)
         .call(
           axisBottom(this.x).tickFormat(domainValue =>
             formatter(
-              this.graphDataMerged.barChart.axis.x.format,
+              this.graphData.barChart.axis.x.format,
               domainValue,
             ),
           ),
         );
     }
 
-    if (this.graphDataMerged.barChart.axis.y.visible) {
-      this.root
+    if (this.graphData.barChart.axis.y.visible) {
+      this.d3sRoot
         .append('g')
         .attr('class', 'y axis')
         .call(axisLeft(this.y));
@@ -160,8 +169,8 @@ export class HorizontalBarChart {
   }
 
   drawGrid(): void {
-    if (this.graphDataMerged.barChart.axis.x.gridVisible) {
-      this.root
+    if (this.graphData.barChart.axis.x.gridVisible) {
+      this.d3sRoot
         .append('g')
         .attr('class', 'grid')
         .call(
@@ -171,8 +180,8 @@ export class HorizontalBarChart {
         );
     }
 
-    if (this.graphDataMerged.barChart.axis.y.gridVisible) {
-      this.root
+    if (this.graphData.barChart.axis.y.gridVisible) {
+      this.d3sRoot
         .append('g')
         .attr('class', 'grid')
         .call(
@@ -184,21 +193,21 @@ export class HorizontalBarChart {
   }
 
   drawBars(): void {
-    this.root
+    this.d3sRoot
       .append('g')
       .attr('class', 'bar-group')
       .selectAll('.bar')
-      .data(this.graphDataMerged.data)
+      .data(this.graphData.data)
       .enter()
       .filter(data => this.x(data) > 0)
       .append('rect')
       .attr('class', 'bar')
       .attr('x', 0)
       .attr('height', this.y.bandwidth())
-      .attr('y', (_, index) => this.y(`${this.graphDataMerged.labels[index].split('.').slice(-1)[0]}`))
+      .attr('y', (_, index) => this.y(`${this.graphData.labels[index].split('.').slice(-1)[0]}`))
       .attr('width', data => this.x(data))
       .attr('fill', (_, index) =>
-        circularFind(this.graphDataMerged.colors, index),
+        circularFind(this.graphData.colors, index),
       )
       .on('mousemove', (_, index) =>
         this.eventsTooltip({ index, isToShow: true }),
@@ -232,10 +241,10 @@ export class HorizontalBarChart {
     return (
       <div class="o-layout">
         <div class="o-layout--chart">
-          <svg style={this.graphDataMerged ? this.graphDataMerged.styles : ''} />
+          <svg style={this.graphData ? this.graphData.styles : ''} />
         </div>
         <div class="o-layout--slot">
-          <slot name="tooltip" />
+          <robeen-tooltip />
         </div>
       </div>
     );

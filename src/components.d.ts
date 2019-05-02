@@ -9,68 +9,59 @@ import '@stencil/core';
 
 
 import {
-  GraphData,
-} from '@app/types/types';
-import {
   Element,
 } from '@stencil/core';
 
 
 export namespace Components {
 
-  interface HorizontalBarChart {
+  interface FortysevenRobeen {
     'dataUrl': string;
-    'graphData': GraphData<number[]>;
-    'updateGraphData': (graphData: any) => void;
   }
-  interface HorizontalBarChartAttributes extends StencilHTMLAttributes {
+  interface FortysevenRobeenAttributes extends StencilHTMLAttributes {
     'dataUrl'?: string;
-    'graphData'?: GraphData<number[]>;
   }
 
-  interface TooltipChart {
-    'align': string;
+  interface RobeenTooltip {
     'hide': () => void;
     'show': (index: number, data: any, positions: number[]) => void;
     'tooltip': (tooltip: Element) => void;
   }
-  interface TooltipChartAttributes extends StencilHTMLAttributes {
-    'align'?: string;
-  }
+  interface RobeenTooltipAttributes extends StencilHTMLAttributes {}
 }
 
 declare global {
   interface StencilElementInterfaces {
-    'HorizontalBarChart': Components.HorizontalBarChart;
-    'TooltipChart': Components.TooltipChart;
+    'FortysevenRobeen': Components.FortysevenRobeen;
+    'RobeenTooltip': Components.RobeenTooltip;
   }
 
   interface StencilIntrinsicElements {
-    'horizontal-bar-chart': Components.HorizontalBarChartAttributes;
-    'tooltip-chart': Components.TooltipChartAttributes;
+    'fortyseven-robeen': Components.FortysevenRobeenAttributes;
+    'robeen-tooltip': Components.RobeenTooltipAttributes;
   }
 
 
-  interface HTMLHorizontalBarChartElement extends Components.HorizontalBarChart, HTMLStencilElement {}
-  var HTMLHorizontalBarChartElement: {
-    prototype: HTMLHorizontalBarChartElement;
-    new (): HTMLHorizontalBarChartElement;
+  interface HTMLFortysevenRobeenElement extends Components.FortysevenRobeen, HTMLStencilElement {}
+  var HTMLFortysevenRobeenElement: {
+    prototype: HTMLFortysevenRobeenElement;
+    new (): HTMLFortysevenRobeenElement;
   };
 
-  interface HTMLTooltipChartElement extends Components.TooltipChart, HTMLStencilElement {}
-  var HTMLTooltipChartElement: {
-    prototype: HTMLTooltipChartElement;
-    new (): HTMLTooltipChartElement;
+  interface HTMLRobeenTooltipElement extends Components.RobeenTooltip, HTMLStencilElement {}
+  var HTMLRobeenTooltipElement: {
+    prototype: HTMLRobeenTooltipElement;
+    new (): HTMLRobeenTooltipElement;
   };
 
   interface HTMLElementTagNameMap {
-    'horizontal-bar-chart': HTMLHorizontalBarChartElement
-    'tooltip-chart': HTMLTooltipChartElement
+    'fortyseven-robeen': HTMLFortysevenRobeenElement
+    'robeen-tooltip': HTMLRobeenTooltipElement
   }
 
   interface ElementTagNameMap {
-    'horizontal-bar-chart': HTMLHorizontalBarChartElement;
-    'tooltip-chart': HTMLTooltipChartElement;
+    'fortyseven-robeen': HTMLFortysevenRobeenElement;
+    'robeen-tooltip': HTMLRobeenTooltipElement;
   }
 
 

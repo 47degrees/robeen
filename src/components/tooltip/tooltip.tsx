@@ -41,7 +41,7 @@ export class Tooltip {
   render() {
     return (
       <div class="tooltip">
-        <div class="tooltip-title">{this.hoodData ? this.hoodData.benchmark : ''})</div>
+        <div class="tooltip-title">{this.hoodData ? this.hoodData.benchmark : ''}</div>
         <div class="tooltip-data-row">
           <div class="tooltip-data-cell">
             <div class="tooltip-data-title">Score</div>

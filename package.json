@@ -1,6 +1,6 @@
 {
-  "name": "robeen",
-  "version": "0.0.1",
+  "name": "@47deg/robeen",
+  "version": "0.0.2",
   "description": "The graphical companion for Hood JMH benchmarks",
   "keywords": [
     "Stencil",
@@ -20,7 +20,7 @@
   "license": "Apache-2.0",
   "module": "dist/esm/index.js",
   "main": "dist/index.js",
-  "unpkg": "dist/ionic.js",
+  "unpkg": "dist/robeen.js",
   "types": "dist/types/components.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "files": [

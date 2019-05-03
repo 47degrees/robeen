@@ -20,7 +20,7 @@ export const DEFAULT_GRAPH_DATA_BAR: GraphData = {
       top: 24,
       right: 48,
       bottom: 24,
-      left: 128,
+      left: 96,
     },
   },
   styles: {

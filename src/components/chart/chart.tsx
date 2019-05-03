@@ -172,6 +172,7 @@ export class Chart {
     if (this.graphData.barChart.axis.x.gridVisible) {
       this.d3sRoot
         .append('g')
+        .style('opacity', 0.1)
         .attr('class', 'grid')
         .call(
           axisBottom(this.x)
@@ -183,6 +184,7 @@ export class Chart {
     if (this.graphData.barChart.axis.y.gridVisible) {
       this.d3sRoot
         .append('g')
+        .style('opacity', 0.1)
         .attr('class', 'grid')
         .call(
           axisLeft(this.y)

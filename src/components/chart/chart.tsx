@@ -12,13 +12,12 @@ import { GraphData, JMHData } from '@app/types/types';
 
 
 @Component({
-  tag: 'fortyseven-robeen',
+  tag: 'robeen-chart',
 })
 export class Chart {
-  @Prop() dataUrl: string;
+  @Prop() metrics!: JMHData;
   @Element() chartEl: HTMLElement;
   graphData: GraphData<number[]>;
-  hoodData: JMHData;
   d3sSvg: Selection<SVGElement, any, HTMLElement, any>;
   d3sRoot: Selection<SVGElement, any, HTMLElement, any>;
   width: number;
@@ -27,23 +26,10 @@ export class Chart {
   y: ScaleBand<string>;
   tooltipEl: HTMLRobeenTooltipElement;
 
-  async componentWillLoad() {
+  componentWillLoad() {
     this.graphData = { ...DEFAULT_GRAPH_DATA_BAR };
-
-    try {
-      if (this.dataUrl) {
-        const response = await fetch(this.dataUrl);
-        const data = await response.json();
-        this.hoodData = data;
-
-        this.graphData.labels = this.hoodData.map((metric) => metric.benchmark);
-        this.graphData.data = this.hoodData.map((metric) => metric.primaryMetric.score);
-      } else {
-        console.warn('No URL to fetch the JMH JSON data from has been set.')
-      }
-    } catch(e) {
-      console.warn('Impossible to fetch a valid JMH JSON data, please check the URL.')
-    }
+    this.graphData.labels = this.metrics.map((metric) => metric.benchmark);
+    this.graphData.data = this.metrics.map((metric) => metric.primaryMetric.score);
   }
 
   componentDidLoad() {
@@ -63,7 +49,7 @@ export class Chart {
       };
 
       window.addEventListener('resize', onResize);
-    } catch(e) {
+    } catch (e) {
       console.warn(e);
       this.drawError(e);
     }
@@ -73,7 +59,7 @@ export class Chart {
     this.setRoot();
     this.d3sRoot
       .append("text")
-      .text(message);   
+      .text(message);
   }
 
   drawChart(): void {
@@ -103,8 +89,8 @@ export class Chart {
         .domain(
           originalGraphDataSortedIndexes
             .map(
-            (sortedIndex, originaIndex): string => `${this.graphData.labels[sortData ? sortedIndex : originaIndex].split('.').slice(-1)[0]}`,
-          ),
+              (sortedIndex, originaIndex): string => `${this.graphData.labels[sortData ? sortedIndex : originaIndex].split('.').slice(-1)[0]}`,
+            ),
         )
         .range([0, this.height])
         .padding(0.2);
@@ -227,7 +213,7 @@ export class Chart {
     const toShow = () => {
       this.tooltipEl.show(
         index,
-        this.hoodData[index],
+        this.metrics[index],
         [event.pageX, event.pageY],
       );
     };
@@ -243,7 +229,7 @@ export class Chart {
     return (
       <div class="o-layout">
         <div class="o-layout--chart">
-          <svg style={this.graphData ? this.graphData.styles : ''} />
+          <svg style={this.graphData ? this.graphData.styles : {}} />
         </div>
         <div class="o-layout--slot">
           <robeen-tooltip />

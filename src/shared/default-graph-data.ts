@@ -26,7 +26,7 @@ export const DEFAULT_GRAPH_DATA_BAR: GraphData = {
   styles: {
     width: '100%',
     height: '300px',
-    margin: '24px 0',
+    margin: '0',
   },
   colors: [
     '#337ab7',

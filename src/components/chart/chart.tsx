@@ -120,12 +120,12 @@ export class Chart {
       );
   }
 
-  initSlots() {
+  async initSlots() {
     const element: Element = this.chartEl.getElementsByClassName('tooltip')[0];
 
     if (element) {
       const component = this.chartEl.querySelector('robeen-tooltip');
-      component.tooltip(element);
+      await component.setTooltip(element);
       this.tooltipEl = component;
     }
   }

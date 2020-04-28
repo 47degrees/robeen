@@ -17,8 +17,8 @@ export class Tooltip {
   d3sTooltip: Selection<Element, any, any, any>;
 
   @Method()
-  async tooltip(tooltip: Element): Promise<void> {
-    this.d3sTooltip = select(tooltip);
+  async setTooltip(tooltipElement: any): Promise<void> {
+    this.d3sTooltip = select(tooltipElement);
   }
 
   @Method()

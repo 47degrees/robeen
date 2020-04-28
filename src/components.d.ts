@@ -6,7 +6,6 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { JMHData, } from "./types/types";
-import { Element, } from "@stencil/core";
 export namespace Components {
     interface FortysevenRobeen {
         "dataUrl": string;
@@ -16,8 +15,8 @@ export namespace Components {
     }
     interface RobeenTooltip {
         "hide": () => Promise<void>;
+        "setTooltip": (tooltipElement: any) => Promise<void>;
         "show": (index: number, data: any, positions: number[]) => Promise<void>;
-        "tooltip": (tooltip: Element) => Promise<void>;
     }
 }
 declare global {

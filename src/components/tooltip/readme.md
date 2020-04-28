@@ -17,7 +17,7 @@ Type: `Promise<void>`
 
 
 
-### `show(index: number, data: any, positions: number[]) => Promise<void>`
+### `setTooltip(tooltipElement: any) => Promise<void>`
 
 
 
@@ -27,7 +27,7 @@ Type: `Promise<void>`
 
 
 
-### `tooltip(tooltip: Element) => Promise<void>`
+### `show(index: number, data: any, positions: number[]) => Promise<void>`
 
 
 
@@ -42,12 +42,12 @@ Type: `Promise<void>`
 
 ### Used by
 
- - [fortyseven-robeen](../chart)
+ - [robeen-chart](../chart)
 
 ### Graph
 ```mermaid
 graph TD;
-  fortyseven-robeen --> robeen-tooltip
+  robeen-chart --> robeen-tooltip
   style robeen-tooltip fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -1,4 +1,4 @@
-robeen-tooltip .tooltip  {
+robeen-tooltip .tooltip {
   position: absolute;
   padding: 8px;
   opacity: 0;
@@ -13,7 +13,7 @@ robeen-tooltip .tooltip  {
   text-align: center;
 }
 
-robeen-tooltip .tooltip-title  {
+robeen-tooltip .tooltip-title {
   font-size: 1rem;
   padding: 8px 0;
 }
@@ -23,7 +23,7 @@ robeen-tooltip .tooltip-data-row {
   justify-content: space-around;
   padding: 8px 0;
 }
-robeen-tooltip .tooltip-data-title  {
+robeen-tooltip .tooltip-data-title {
   font-weight: bold;
   padding-bottom: 8px;
 }
@@ -31,5 +31,3 @@ robeen-tooltip .tooltip-data-title  {
 robeen-tooltip .error-info {
   color: tomato;
 }
-
-

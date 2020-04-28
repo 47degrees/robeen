@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { JMHData, } from "./types/types";
+import { JMHData, } from "@app/types/types";
 export namespace Components {
     interface FortysevenRobeen {
         "dataUrl": string;

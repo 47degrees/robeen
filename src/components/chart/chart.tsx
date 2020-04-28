@@ -1,18 +1,17 @@
-import { h, Component, Element, Prop } from '@stencil/core';
+import { h, Component, Element, Prop } from "@stencil/core";
 
-import { Selection, select, event } from 'd3-selection';
-import { max } from 'd3-array';
-import { ScaleBand, scaleBand, ScaleLinear, scaleLinear } from 'd3-scale';
-import { axisBottom, axisLeft } from 'd3-axis';
+import { Selection, select, event } from "d3-selection";
+import { max } from "d3-array";
+import { ScaleBand, scaleBand, ScaleLinear, scaleLinear } from "d3-scale";
+import { axisBottom, axisLeft } from "d3-axis";
 
-import { formatter, circularFind } from '@app/utils/utils';
+import { formatter, circularFind } from "@app/utils/utils";
 import { DEFAULT_GRAPH_DATA_BAR } from "@app/shared/default-graph-data";
 
 import { GraphData, JMHData } from "@app/types/types";
 
-
 @Component({
-  tag: 'robeen-chart',
+  tag: "robeen-chart",
 })
 export class Chart {
   @Prop() metrics!: JMHData;
@@ -29,11 +28,13 @@ export class Chart {
   componentWillLoad() {
     this.graphData = { ...DEFAULT_GRAPH_DATA_BAR };
     this.graphData.labels = this.metrics.map((metric) => metric.benchmark);
-    this.graphData.data = this.metrics.map((metric) => metric.primaryMetric.score);
+    this.graphData.data = this.metrics.map(
+      (metric) => metric.primaryMetric.score
+    );
   }
 
   componentDidLoad() {
-    this.d3sSvg = select(this.chartEl.getElementsByTagName('svg')[0]);
+    this.d3sSvg = select(this.chartEl.getElementsByTagName("svg")[0]);
 
     this.height =
       this.d3sSvg.node().getBoundingClientRect().height -
@@ -48,7 +49,7 @@ export class Chart {
         this.drawChart();
       };
 
-      window.addEventListener('resize', onResize);
+      window.addEventListener("resize", onResize);
     } catch (e) {
       console.warn(e);
       this.drawError(e);
@@ -57,9 +58,7 @@ export class Chart {
 
   drawError(message: string): void {
     this.setRoot();
-    this.d3sRoot
-      .append("text")
-      .text(message);
+    this.d3sRoot.append("text").text(message);
   }
 
   drawChart(): void {
@@ -74,10 +73,10 @@ export class Chart {
       const originalGraphData: number[] = this.graphData.data;
       const originalGraphDataSortedIndexes: any[] = originalGraphData
         .map((val, ind) => ({ ind, val }))
-        .sort((a, b) => a.val >= b.val ? 1 : 0)
+        .sort((a, b) => (a.val >= b.val ? 1 : 0))
         .map((obj) => obj.ind);
 
-      const maxValue = max<number, number>(originalGraphData, data => data);
+      const maxValue = max<number, number>(originalGraphData, (data) => data);
 
       this.x = scaleLinear()
         .domain([0, Math.ceil(maxValue / 100) * 100])
@@ -87,10 +86,14 @@ export class Chart {
 
       this.y = scaleBand()
         .domain(
-          originalGraphDataSortedIndexes
-            .map(
-              (sortedIndex, originaIndex): string => `${this.graphData.labels[sortData ? sortedIndex : originaIndex].split('.').slice(-1)[0]}`,
-            ),
+          originalGraphDataSortedIndexes.map(
+            (sortedIndex, originaIndex): string =>
+              `${
+                this.graphData.labels[sortData ? sortedIndex : originaIndex]
+                  .split(".")
+                  .slice(-1)[0]
+              }`
+          )
         )
         .range([0, this.height])
         .padding(0.2);
@@ -111,20 +114,18 @@ export class Chart {
     }
 
     this.d3sRoot = this.d3sSvg
-      .append('g')
+      .append("g")
       .attr(
-        'transform',
-        `translate(${this.graphData.barChart.margin.left}, ${
-        this.graphData.barChart.margin.top
-        })`,
+        "transform",
+        `translate(${this.graphData.barChart.margin.left}, ${this.graphData.barChart.margin.top})`
       );
   }
 
   async initSlots() {
-    const element: Element = this.chartEl.getElementsByClassName('tooltip')[0];
+    const element: Element = this.chartEl.getElementsByClassName("tooltip")[0];
 
     if (element) {
-      const component = this.chartEl.querySelector('robeen-tooltip');
+      const component = this.chartEl.querySelector("robeen-tooltip");
       await component.setTooltip(element);
       this.tooltipEl = component;
     }
@@ -133,74 +134,68 @@ export class Chart {
   drawAxis(): void {
     if (this.graphData.barChart.axis.x.visible) {
       this.d3sRoot
-        .append('g')
-        .attr('class', 'x axis')
-        .attr('transform', `translate(0, ${this.height})`)
+        .append("g")
+        .attr("class", "x axis")
+        .attr("transform", `translate(0, ${this.height})`)
         .call(
-          axisBottom(this.x).tickFormat(domainValue =>
-            formatter(
-              this.graphData.barChart.axis.x.format,
-              domainValue,
-            ),
-          ),
+          axisBottom(this.x).tickFormat((domainValue) =>
+            formatter(this.graphData.barChart.axis.x.format, domainValue)
+          )
         );
     }
 
     if (this.graphData.barChart.axis.y.visible) {
-      this.d3sRoot
-        .append('g')
-        .attr('class', 'y axis')
-        .call(axisLeft(this.y));
+      this.d3sRoot.append("g").attr("class", "y axis").call(axisLeft(this.y));
     }
   }
 
   drawGrid(): void {
     if (this.graphData.barChart.axis.x.gridVisible) {
       this.d3sRoot
-        .append('g')
-        .style('opacity', 0.1)
-        .attr('class', 'grid')
+        .append("g")
+        .style("opacity", 0.1)
+        .attr("class", "grid")
         .call(
           axisBottom(this.x)
             .tickSize(this.height)
-            .tickFormat(() => ''),
+            .tickFormat(() => "")
         );
     }
 
     if (this.graphData.barChart.axis.y.gridVisible) {
       this.d3sRoot
-        .append('g')
-        .style('opacity', 0.1)
-        .attr('class', 'grid')
+        .append("g")
+        .style("opacity", 0.1)
+        .attr("class", "grid")
         .call(
           axisLeft(this.y)
             .tickSize(-this.width)
-            .tickFormat(() => ''),
+            .tickFormat(() => "")
         );
     }
   }
 
   drawBars(): void {
     this.d3sRoot
-      .append('g')
-      .attr('class', 'bar-group')
-      .selectAll('.bar')
+      .append("g")
+      .attr("class", "bar-group")
+      .selectAll(".bar")
       .data(this.graphData.data)
       .enter()
-      .filter(data => this.x(data) > 0)
-      .append('rect')
-      .attr('class', 'bar')
-      .attr('x', 0)
-      .attr('height', this.y.bandwidth())
-      .attr('y', (_, index) => this.y(`${this.graphData.labels[index].split('.').slice(-1)[0]}`))
-      .attr('width', data => this.x(data))
-      .attr('fill', (_, index) =>
-        circularFind(this.graphData.colors, index),
+      .filter((data) => this.x(data) > 0)
+      .append("rect")
+      .attr("class", "bar")
+      .attr("x", 0)
+      .attr("height", this.y.bandwidth())
+      .attr("y", (_, index) =>
+        this.y(`${this.graphData.labels[index].split(".").slice(-1)[0]}`)
       )
-      .on('mousemove', (_, index) =>
-        this.eventsTooltip({ index, isToShow: true }),
+      .attr("width", (data) => this.x(data))
+      .attr("fill", (_, index) => circularFind(this.graphData.colors, index))
+      .on("mousemove", (_, index) =>
+        this.eventsTooltip({ index, isToShow: true })
       )
-      .on('mouseout', () => this.eventsTooltip({ isToShow: false }));
+      .on("mouseout", () => this.eventsTooltip({ isToShow: false }));
   }
 
   eventsTooltip({
@@ -211,11 +206,10 @@ export class Chart {
     isToShow: boolean;
   }): void {
     const toShow = () => {
-      this.tooltipEl.show(
-        index,
-        this.metrics[index],
-        [event.pageX, event.pageY],
-      );
+      this.tooltipEl.show(index, this.metrics[index], [
+        event.pageX,
+        event.pageY,
+      ]);
     };
 
     const toHide = () => this.tooltipEl.hide();

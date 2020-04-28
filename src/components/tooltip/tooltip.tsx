@@ -1,10 +1,9 @@
-import { h, Component, Element, Method, State } from '@stencil/core';
+import { h, Component, Element, Method, State } from "@stencil/core";
 
-import { Selection, select } from 'd3-selection';
-import { transition } from 'd3-transition';
+import { Selection, select } from "d3-selection";
+import { transition } from "d3-transition";
 
 import { formatter } from "@app/utils/utils";
-
 
 @Component({
   tag: "robeen-tooltip",

@@ -14,11 +14,7 @@ type Margin = Partial<{
   left: number;
 }>;
 
-type Formats =
-  | 'PERCENTAGE'
-  | 'GROUPED_TWO_DIGITS'
-  | 'TWO_DECIMALS'
-  | 'ANY';
+type Formats = "PERCENTAGE" | "GROUPED_TWO_DIGITS" | "TWO_DECIMALS" | "ANY";
 
 type Axis = Partial<{
   x: Partial<{
@@ -40,7 +36,6 @@ type BarChart = Partial<{
   margin: Margin;
 }>;
 
-
 type GraphData<T = number[]> = Partial<{
   barChart: BarChart;
   styles: Styles;
@@ -49,7 +44,6 @@ type GraphData<T = number[]> = Partial<{
   data: T;
   hasData: HasData;
 }>;
-
 
 type JMHMetric = {
   score: number;
@@ -69,11 +63,11 @@ type JMHMetric = {
     99.9999: number;
     100.0: number;
   }>;
-}
+};
 
 type JMHDataKeys = {
-  [keys: string]: JMHData
-}
+  [keys: string]: JMHData;
+};
 
 type JMHData = Array<{
   benchmark: string;
@@ -84,7 +78,7 @@ type JMHData = Array<{
   threads?: number;
   forks?: number;
   jvm?: string;
-  jvmArgs?: (string | number)[],
+  jvmArgs?: (string | number)[];
   jdkVersion?: string;
   vmName?: string;
   vmVersion?: string;
@@ -96,5 +90,14 @@ type JMHData = Array<{
   measurementBatchSize?: number;
 }>;
 
-
-export { HasData, Styles, Margin, Formats, Axis, GraphData, JMHMetric, JMHData, JMHDataKeys };
+export {
+  HasData,
+  Styles,
+  Margin,
+  Formats,
+  Axis,
+  GraphData,
+  JMHMetric,
+  JMHData,
+  JMHDataKeys,
+};

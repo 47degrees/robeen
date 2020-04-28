@@ -1,5 +1,5 @@
-import { h, Component, Prop } from '@stencil/core'
-import { JMHDataKeys } from '@app/types/types';
+import { h, Component, Prop } from "@stencil/core";
+import { JMHDataKeys } from "@app/types/types";
 
 @Component({
   tag: "fortyseven-robeen",

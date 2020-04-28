@@ -23,7 +23,7 @@
   "es2017": "dist/esm/index.mjs",
   "jsnext:main": "dist/esm/index.mjs",
   "main": "dist/index.js",
-  "unpkg": "dist/robeen.js",
+  "unpkg": "dist/robeen/robeen.js",
   "types": "dist/types/components.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "files": [

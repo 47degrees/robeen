@@ -1,6 +1,5 @@
-import { GraphData } from '@app/types/types';
-import { hasDataIsNotempty } from '@app/utils/utils'
-
+import { GraphData } from "@app/types/types";
+import { hasDataIsNotempty } from "@app/utils/utils";
 
 export const DEFAULT_GRAPH_DATA_BAR: GraphData = {
   barChart: {
@@ -8,12 +7,12 @@ export const DEFAULT_GRAPH_DATA_BAR: GraphData = {
       x: {
         visible: true,
         gridVisible: true,
-        format: 'GROUPED_TWO_DIGITS'
+        format: "GROUPED_TWO_DIGITS",
       },
       y: {
         visible: true,
         gridVisible: true,
-        format: 'TWO_DECIMALS'
+        format: "TWO_DECIMALS",
       },
     },
     margin: {
@@ -24,13 +23,11 @@ export const DEFAULT_GRAPH_DATA_BAR: GraphData = {
     },
   },
   styles: {
-    width: '100%',
-    height: '300px',
-    margin: '24px 0',
+    width: "100%",
+    height: "300px",
+    margin: "0",
   },
-  colors: [
-    '#337ab7',
-  ],
+  colors: ["#337ab7"],
   labels: [],
   data: [],
   hasData: (graphData: GraphData) => hasDataIsNotempty(graphData),

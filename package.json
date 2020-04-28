@@ -18,7 +18,10 @@
   ],
   "repository": "47deg/robeen",
   "license": "Apache-2.0",
-  "module": "dist/esm/index.js",
+  "module": "dist/index.mjs",
+  "es2015": "dist/esm/index.mjs",
+  "es2017": "dist/esm/index.mjs",
+  "jsnext:main": "dist/esm/index.mjs",
   "main": "dist/index.js",
   "unpkg": "dist/robeen.js",
   "types": "dist/types/components.d.ts",
@@ -33,7 +36,7 @@
     "test.watch": "stencil test --spec --e2e --watchAll"
   },
   "devDependencies": {
-    "@stencil/core": "0.18.1"
+    "@stencil/core": "1.12.6"
   },
   "dependencies": {
     "d3": "5.9.2"

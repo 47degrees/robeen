@@ -1,4 +1,4 @@
-import { Formats, GraphData, HasData } from '@app/types/types';
+import { Formats, GraphData, HasData } from '../types/types';
 
 import { format } from 'd3-format';
 

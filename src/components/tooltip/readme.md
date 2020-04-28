@@ -7,50 +7,49 @@
 
 ## Methods
 
-### `hide() => void`
+### `hide() => Promise<void>`
 
 
 
 #### Returns
 
-Type: `void`
+Type: `Promise<void>`
 
 
 
-### `show(index: number, data: any, positions: number[]) => void`
+### `show(index: number, data: any, positions: number[]) => Promise<void>`
 
 
-
-#### Parameters
-
-| Name        | Type       | Description |
-| ----------- | ---------- | ----------- |
-| `index`     | `number`   |             |
-| `data`      | `any`      |             |
-| `positions` | `number[]` |             |
 
 #### Returns
 
-Type: `void`
+Type: `Promise<void>`
 
 
 
-### `tooltip(tooltip: Element) => void`
+### `tooltip(tooltip: Element) => Promise<void>`
 
 
-
-#### Parameters
-
-| Name      | Type      | Description |
-| --------- | --------- | ----------- |
-| `tooltip` | `Element` |             |
 
 #### Returns
 
-Type: `void`
+Type: `Promise<void>`
 
 
 
+
+## Dependencies
+
+### Used by
+
+ - [fortyseven-robeen](../chart)
+
+### Graph
+```mermaid
+graph TD;
+  fortyseven-robeen --> robeen-tooltip
+  style robeen-tooltip fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

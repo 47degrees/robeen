@@ -1,14 +1,14 @@
-import { Component, Element, Prop } from '@stencil/core';
+import { h, Component, Element, Prop } from '@stencil/core';
 
 import { Selection, select, event } from 'd3-selection';
 import { max } from 'd3-array';
 import { ScaleBand, scaleBand, ScaleLinear, scaleLinear } from 'd3-scale';
 import { axisBottom, axisLeft } from 'd3-axis';
 
-import { formatter, circularFind } from '@app/utils/utils';
-import { DEFAULT_GRAPH_DATA_BAR } from '@app/shared/default-graph-data';
+import { formatter, circularFind } from '../../utils/utils';
+import { DEFAULT_GRAPH_DATA_BAR } from '../../shared/default-graph-data';
 
-import { GraphData, JMHData } from '@app/types/types';
+import { GraphData, JMHData } from '../../types/types';
 
 
 @Component({
@@ -243,7 +243,7 @@ export class Chart {
     return (
       <div class="o-layout">
         <div class="o-layout--chart">
-          <svg style={this.graphData ? this.graphData.styles : ''} />
+          <svg style={this.graphData ? this.graphData.styles : {}} />
         </div>
         <div class="o-layout--slot">
           <robeen-tooltip />

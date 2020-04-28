@@ -71,6 +71,10 @@ type JMHMetric = {
   }>;
 }
 
+type JMHDataKeys = {
+  [keys: string]: JMHData
+}
+
 type JMHData = Array<{
   benchmark: string;
   mode: string;
@@ -93,4 +97,4 @@ type JMHData = Array<{
 }>;
 
 
-export { HasData, Styles, Margin, Formats, Axis, GraphData, JMHMetric, JMHData };
+export { HasData, Styles, Margin, Formats, Axis, GraphData, JMHMetric, JMHData, JMHDataKeys };

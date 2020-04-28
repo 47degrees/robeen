@@ -9,17 +9,27 @@ import '@stencil/core';
 
 
 import {
+  JMHData,
+} from '@app/types/types';
+import {
   Element,
 } from '@stencil/core';
 
 
 export namespace Components {
 
+  interface RobeenChart {
+    'metrics': JMHData;
+  }
+  interface RobeenChartAttributes extends StencilHTMLAttributes {
+    'metrics': JMHData;
+  }
+
   interface FortysevenRobeen {
     'dataUrl': string;
   }
   interface FortysevenRobeenAttributes extends StencilHTMLAttributes {
-    'dataUrl'?: string;
+    'dataUrl': string;
   }
 
   interface RobeenTooltip {
@@ -32,15 +42,23 @@ export namespace Components {
 
 declare global {
   interface StencilElementInterfaces {
+    'RobeenChart': Components.RobeenChart;
     'FortysevenRobeen': Components.FortysevenRobeen;
     'RobeenTooltip': Components.RobeenTooltip;
   }
 
   interface StencilIntrinsicElements {
+    'robeen-chart': Components.RobeenChartAttributes;
     'fortyseven-robeen': Components.FortysevenRobeenAttributes;
     'robeen-tooltip': Components.RobeenTooltipAttributes;
   }
 
+
+  interface HTMLRobeenChartElement extends Components.RobeenChart, HTMLStencilElement {}
+  var HTMLRobeenChartElement: {
+    prototype: HTMLRobeenChartElement;
+    new (): HTMLRobeenChartElement;
+  };
 
   interface HTMLFortysevenRobeenElement extends Components.FortysevenRobeen, HTMLStencilElement {}
   var HTMLFortysevenRobeenElement: {
@@ -55,11 +73,13 @@ declare global {
   };
 
   interface HTMLElementTagNameMap {
+    'robeen-chart': HTMLRobeenChartElement
     'fortyseven-robeen': HTMLFortysevenRobeenElement
     'robeen-tooltip': HTMLRobeenTooltipElement
   }
 
   interface ElementTagNameMap {
+    'robeen-chart': HTMLRobeenChartElement;
     'fortyseven-robeen': HTMLFortysevenRobeenElement;
     'robeen-tooltip': HTMLRobeenTooltipElement;
   }

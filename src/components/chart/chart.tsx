@@ -5,10 +5,10 @@ import { max } from 'd3-array';
 import { ScaleBand, scaleBand, ScaleLinear, scaleLinear } from 'd3-scale';
 import { axisBottom, axisLeft } from 'd3-axis';
 
-import { formatter, circularFind } from '../../utils/utils';
-import { DEFAULT_GRAPH_DATA_BAR } from '../../shared/default-graph-data';
+import { formatter, circularFind } from '@app/utils/utils';
+import { DEFAULT_GRAPH_DATA_BAR } from "@app/shared/default-graph-data";
 
-import { GraphData, JMHData } from '../../types/types';
+import { GraphData, JMHData } from "@app/types/types";
 
 
 @Component({

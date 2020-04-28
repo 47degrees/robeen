@@ -1,5 +1,5 @@
-import { GraphData } from '../types/types';
-import { hasDataIsNotempty } from '../utils/utils'
+import { GraphData } from "@app/types/types";
+import { hasDataIsNotempty } from "@app/utils/utils";
 
 
 export const DEFAULT_GRAPH_DATA_BAR: GraphData = {

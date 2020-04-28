@@ -16,7 +16,7 @@
   "contributors": [
     "Juan Valencia Calvellido <juanvalencia@calvellido.es> (https://calvellido.es)"
   ],
-  "repository": "47deg/robeen",
+  "repository": "47degrees/robeen",
   "license": "Apache-2.0",
   "module": "dist/index.mjs",
   "es2015": "dist/esm/index.mjs",

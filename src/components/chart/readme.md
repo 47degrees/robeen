@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property  | Attribute  | Description | Type     | Default     |
-| --------- | ---------- | ----------- | -------- | ----------- |
-| `dataUrl` | `data-url` |             | `string` | `undefined` |
+| Property               | Attribute | Description | Type  | Default     |
+| ---------------------- | --------- | ----------- | ----- | ----------- |
+| `metrics` _(required)_ | `metrics` |             | `any` | `undefined` |
 
 
 ## Dependencies

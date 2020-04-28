@@ -5,10 +5,14 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { JMHData, } from "./types/types";
 import { Element, } from "@stencil/core";
 export namespace Components {
     interface FortysevenRobeen {
         "dataUrl": string;
+    }
+    interface RobeenChart {
+        "metrics": JMHData;
     }
     interface RobeenTooltip {
         "hide": () => Promise<void>;
@@ -23,6 +27,12 @@ declare global {
         prototype: HTMLFortysevenRobeenElement;
         new (): HTMLFortysevenRobeenElement;
     };
+    interface HTMLRobeenChartElement extends Components.RobeenChart, HTMLStencilElement {
+    }
+    var HTMLRobeenChartElement: {
+        prototype: HTMLRobeenChartElement;
+        new (): HTMLRobeenChartElement;
+    };
     interface HTMLRobeenTooltipElement extends Components.RobeenTooltip, HTMLStencilElement {
     }
     var HTMLRobeenTooltipElement: {
@@ -31,17 +41,22 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "fortyseven-robeen": HTMLFortysevenRobeenElement;
+        "robeen-chart": HTMLRobeenChartElement;
         "robeen-tooltip": HTMLRobeenTooltipElement;
     }
 }
 declare namespace LocalJSX {
     interface FortysevenRobeen {
-        "dataUrl"?: string;
+        "dataUrl": string;
+    }
+    interface RobeenChart {
+        "metrics": JMHData;
     }
     interface RobeenTooltip {
     }
     interface IntrinsicElements {
         "fortyseven-robeen": FortysevenRobeen;
+        "robeen-chart": RobeenChart;
         "robeen-tooltip": RobeenTooltip;
     }
 }
@@ -50,6 +65,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "fortyseven-robeen": LocalJSX.FortysevenRobeen & JSXBase.HTMLAttributes<HTMLFortysevenRobeenElement>;
+            "robeen-chart": LocalJSX.RobeenChart & JSXBase.HTMLAttributes<HTMLRobeenChartElement>;
             "robeen-tooltip": LocalJSX.RobeenTooltip & JSXBase.HTMLAttributes<HTMLRobeenTooltipElement>;
         }
     }
